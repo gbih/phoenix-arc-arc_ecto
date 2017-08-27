@@ -2,7 +2,9 @@ defmodule App.ImageFile do
   use Arc.Definition
 
   # Include ecto support (requires package arc_ecto installed):
-  # use Arc.Ecto.Definition
+  
+  # GB arc
+  use Arc.Ecto.Definition
 
   @versions [:original]
 
