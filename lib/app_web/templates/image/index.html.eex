@@ -1,0 +1,28 @@
+<h2>Listing Images</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Filename</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for image <- @images do %>
+    <tr>
+      <td><%= image.name %></td>
+      <td><%= image.filename %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: image_path(@conn, :show, image), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: image_path(@conn, :edit, image), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: image_path(@conn, :delete, image), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Image", to: image_path(@conn, :new) %></span>

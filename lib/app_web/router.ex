@@ -17,6 +17,9 @@ defmodule AppWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+
+    # GB arc
+    resources "/images", ImageController
   end
 
   # Other scopes may use custom stacks.

@@ -1,0 +1,5 @@
+<h2>New Image</h2>
+
+<%= render "form.html", Map.put(assigns, :action, image_path(@conn, :create)) %>
+
+<span><%= link "Back", to: image_path(@conn, :index) %></span>
