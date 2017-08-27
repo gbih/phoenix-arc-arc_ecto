@@ -1,4 +1,4 @@
-# Directions for using arc and arc_ecto for local upload to Phoenix
+# Using Phoenix 1.3, arc and arc_ecto for local image uploads
 
 ```
 mix phx.new app
