@@ -10,38 +10,41 @@ mix ecto.create
 Edit mix.exs
 
 ```
-	{:arc, "~> 0.8.0"},
-	{:arc_ecto, "~> 0.7.0"},
-	{:poison, "~> 3.1"}
+{:arc, "~> 0.8.0"},
+{:arc_ecto, "~> 0.7.0"},
+{:poison, "~> 3.1"}
+```
 
+Then
+
+```
 mix deps.get
 ```
 
 
-
 Edit config.exs
 ```
-	config :arc,
-	  storage: Arc.Storage.Local
+config :arc,
+  storage: Arc.Storage.Local
 ```
 
 
 Run to create an uploader.
 
 ```
-	mix arc.g image_file
+mix arc.g image_file
 ```
 
 
 Need to move this for Phoenix 1.3
 ```
-	mv web/uploaders lib/app_web/uploaders
+mv web/uploaders lib/app_web/uploaders
 ```
 
 
 Edit image_file.ex in lib/app_web/uploaders/image_file.ex
 ```
-  use Arc.Ecto.Definition
+use Arc.Ecto.Definition
 ```
 
 
@@ -49,17 +52,16 @@ Prep the Phoenix app for the uploader
 
 ```
 mix phx.gen.html Assets Image images name:string filename:string
-
 ```
 
 Add to router.ex
 ```
-    resources "/images", ImageController
+resources "/images", ImageController
 ```
 
 Run 
 ```
-	mix ecto.migrate
+mix ecto.migrate
 ```
 
 
@@ -68,17 +70,17 @@ Make this Image model work together with the uploader we just created.
 Edit app/lib/app/assets/image.ex and add
 
 ```
-	use Arc.Ecto.Schema
+use Arc.Ecto.Schema
 ```
 
 Change the type of the :filename field to the uploader with App.ImageFile.Type as in
 ```
-	field :filename, App.ImageFile.Type
+field :filename, App.ImageFile.Type
 ```
 
 In the changeset, cast the :filename field to an attachments.
 ```
-    |> cast_attachments(attrs, [:filename])
+|> cast_attachments(attrs, [:filename])
 ```
 
 
@@ -87,29 +89,33 @@ Edit the image templates to enable file uploads
 Edit form.html.eex to enable multipart true
 
 ```
-	<%= form_for @changeset, @action, [{:multipart, true}], fn f -> %>
+<%= form_for @changeset, @action, [{:multipart, true}], fn f -> %>
 ```
 
 Change the :filename input field to use file_input instead of text_input:
 Eg replace text_input against file_input type.
-
-
+```
+  <div class="form-group">
+    <%= label f, :filename, class: "control-label" %>
+    <%= file_input f, :filename, class: "form-control" %>
+    <%= error_tag f, :filename %>
+  </div>
+```
 
 Edit index.html.eex
 
 Remove any references to @image.filename in app/lib/app_web/templates/image/index.html.eex
 ```
-	<td><%= # image.filename %></td>
+<td><%= # image.filename %></td>
 ```
 
 Do the same in app/lib/app_web/templates/image/view.html.eex
 
 
-
 Run
 ```
-	mix.ecto.migrate
-	mix phx.server
+mix.ecto.migrate
+mix phx.server
 ```
 
 Access this page and try to upload an image:
@@ -117,8 +123,8 @@ http://localhost:4000/images
 
 Test query via iex -S mix:
 ```
- 	App.Assets.list_images
-	App.Assets.get_image!(1)
+App.Assets.list_images
+App.Assets.get_image!(1)
 ```
 
 Edit index.html.eex
@@ -128,12 +134,12 @@ App.ImageFile
 
 To display image, edit index.html.eex in images template folder
 ```
- 	<td><img height=100 width=auto src="<%= App.ImageFile.url({image.filename, image})%>"></td>
+<td><img height=100 width=auto src="<%= App.ImageFile.url({image.filename, image})%>"></td>
 ```
 
 Edit show.html
 ```
- 	<img height=100 width=auto src="<%=  App.ImageFile.url({@image.filename, @image})%>"
+<img height=100 width=auto src="<%=  App.ImageFile.url({@image.filename, @image})%>"
 ```
 
 
