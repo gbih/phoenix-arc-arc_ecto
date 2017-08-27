@@ -13,7 +13,7 @@
 <%= for image <- @images do %>
     <tr>
       <td><%= image.name %></td>
-      <td><%= image.filename %></td>
+      <td><%= # GB image.filename %></td>
 
       <td class="text-right">
         <span><%= link "Show", to: image_path(@conn, :show, image), class: "btn btn-default btn-xs" %></span>

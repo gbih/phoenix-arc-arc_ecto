@@ -9,7 +9,7 @@
 
   <li>
     <strong>Filename:</strong>
-    <%= @image.filename %>
+    <%= # GB @image.filename %>
   </li>
 
 </ul>
