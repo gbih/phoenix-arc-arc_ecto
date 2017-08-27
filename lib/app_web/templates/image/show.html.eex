@@ -10,6 +10,7 @@
   <li>
     <strong>Filename:</strong>
     <%= # GB @image.filename %>
+    <img height=100 width=auto src="<%=  App.ImageFile.url({@image.filename, @image})%>"
   </li>
 
 </ul>

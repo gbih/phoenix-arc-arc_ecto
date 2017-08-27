@@ -5,7 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Filename</th>
-
+      <th>Image</th>
       <th></th>
     </tr>
   </thead>
@@ -13,7 +13,9 @@
 <%= for image <- @images do %>
     <tr>
       <td><%= image.name %></td>
-      <td><%= # GB image.filename %></td>
+      <td><%= image.filename %></td>
+
+<td><img height=100 width=auto src="<%= App.ImageFile.url({image.filename, image})%>"></td>
 
       <td class="text-right">
         <span><%= link "Show", to: image_path(@conn, :show, image), class: "btn btn-default btn-xs" %></span>
